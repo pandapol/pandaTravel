@@ -13,10 +13,13 @@
 
 Route::get('/', 'HomeController@index')
         ->name('home');
-Route::get('/detail', 'DetailController@index')
+
+Route::get('/detail/{slug}', 'DetailController@index')
         ->name('detail');
+
 Route::get('/checkout', 'CheckoutController@index')
         ->name('checkout');
+
 Route::get('/checkout/success', 'CheckoutController@success')
         ->name('checkout-success');
 
