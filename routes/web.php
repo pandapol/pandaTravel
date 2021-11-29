@@ -17,11 +17,26 @@ Route::get('/', 'HomeController@index')
 Route::get('/detail/{slug}', 'DetailController@index')
         ->name('detail');
 
-Route::get('/checkout', 'CheckoutController@index')
-        ->name('checkout');
-
-Route::get('/checkout/success', 'CheckoutController@success')
-        ->name('checkout-success');
+//Fungsinya untuk memproses data dari chehckout
+Route::post('/checkout/{id}','CheckoutController@process')
+        ->name('checkout_process')
+        ->middleware(['auth','verified']);
+//Jika data checkout  berhasil maka akan menapilkan tampilan index Checkout
+Route::get('/checkout/{id}','CheckoutController@index')
+        ->name('checkout')
+        ->middleware(['auth','verified']);
+//Menambahkan orang lain selain member
+Route::post('/checkout/create/{detail_id}','CheckoutController@create')
+        ->name('checkout-create')
+        ->middleware(['auth','verified']);
+//Menghapus orang lain selain member
+Route::get('/checkout/remove/{detail_id}','CheckoutController@remove')
+        ->name('checkout-remove')
+        ->middleware(['auth','verified']);
+//Mengganti status menjadi konfirmasi
+Route::get('/checkout/confirm/{id}','CheckoutController@success')
+        ->name('checkout-success')
+        ->middleware(['auth','verified']);
 
 Route::prefix('admin')
     ->namespace('Admin')
